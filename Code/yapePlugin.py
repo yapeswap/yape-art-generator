@@ -93,9 +93,6 @@ class Monkey():
             self.hasAcc = True
         else:
             self.hasAcc = False 
-    
-    def setSelfName(self, n):
-        self.name = n
 
     def hatValidate(self):
         #pick one of the three to make true at random
@@ -110,6 +107,9 @@ class Monkey():
                 self.whatHat = "Rag"
             if self.cansAcc:
                 self.whatHat = "Cans"
+
+    def setSelfName(self, n):
+        self.name = n
 
 
 def analytics(monkies):
@@ -142,10 +142,6 @@ def analytics(monkies):
         pats.append(x.coinPat, x.hairpat, x.faceEarsPat, x.cansOuterPat, x.cansInnerPat)
         hats.append(x.cmdrOuterPat, x.cmdrOuterStarPat, x.cmdrInnerStarPat, x.duragPat)
         grad.append(x.shadesPat, x.canePat, x.eyeMouthPat)
-
-
-
-
 
 
 def monkeyGen(ident):
@@ -436,7 +432,7 @@ def tlGen(monkey):
         image.active_layer = image.layers[0]
         drawable = image.active_layer
 
-        pdb.file_png_save(image, drawable, "/home/notes/Programming/Yapeswap/yape-art-generator/Yapes/"  + str(monkey.ident) + ".png", str(monkey.ident) + ".png", 0, 0, 0, 0, 0, 1, 1)
+        pdb.file_png_save(image, drawable, "/home/notes/Programming/Yapeswap/yape-art-generator/Yapes/" + str(monkey.ident) + ".png", str(monkey.ident) + ".png", 0, 0, 0, 0, 0, 1, 1)
         pdb.gimp_image_delete(image)
 
 def loadNames():

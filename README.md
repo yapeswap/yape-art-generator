@@ -1,6 +1,6 @@
 # yape-nft
 
-![alt text](https://github.com/0xSumna/yape-nft/blob/main/Test/23.png?raw=true)
+![alt text](https://github.com/yapeswap/yape-art-generator  /main/Test/23.png?raw=true)
 ![alt text](https://github.com/0xSumna/yape-nft/blob/main/Test/42.png?raw=true)
 ![alt text](https://github.com/0xSumna/yape-nft/blob/main/Test/69.png?raw=true)
 ![alt text](https://github.com/0xSumna/yape-nft/blob/main/Test/83.png?raw=true)
