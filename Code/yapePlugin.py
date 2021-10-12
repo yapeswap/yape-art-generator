@@ -51,7 +51,7 @@ class Monkey():
         self.hairNum = hairPat
         self.faceEarsNum = faceEarsPat
         self.eyeMouthNum = eyeMouthPat
-        self.hatAcc = numpy.random.choice(elements, p=hatWeight
+        self.hatAcc = numpy.random.choice(elements, p=hatWeight)
         self.cmdrAcc = False
         self.duragAcc = False
         self.cansAcc = False
@@ -93,6 +93,23 @@ class Monkey():
             self.hasAcc = True
         else:
             self.hasAcc = False 
+    
+    def setSelfName(self, n):
+        self.name = n
+
+    def hatValidate(self):
+        #pick one of the three to make true at random
+        if(self.hatAcc):
+            choice = numpy.random.choice(hatAssist, p=hatChoice)
+            self.cmdrAcc = hatTable[choice][0]
+            self.duragAcc = hatTable[choice][1]
+            self.cansAcc = hatTable[choice][2]
+            if self.cmdrAcc:
+                self.whatHat = "Commander"
+            if self.duragAcc:
+                self.whatHat = "Rag"
+            if self.cansAcc:
+                self.whatHat = "Cans"
 
 
 def analytics(monkies):
@@ -113,7 +130,7 @@ def analytics(monkies):
     for x in range(gradCeil):
         grad.append((x, 0))
 
-    for x in monkies
+    for x in monkies:
         if x.hasAcc:
             accessoryCount += 1
         if x.shadesAcc:
@@ -127,22 +144,8 @@ def analytics(monkies):
         grad.append(x.shadesPat, x.canePat, x.eyeMouthPat)
 
 
-    def hatValidate(self):
-        #pick one of the three to make true at random
-        if(self.hatAcc):
-            choice = numpy.random.choice(hatAssist, p=hatChoice)
-            self.cmdrAcc = hatTable[choice][0]
-            self.duragAcc = hatTable[choice][1]
-            self.cansAcc = hatTable[choice][2]
-            if cmdrAcc:
-                self.whatHat = "Commander"
-            if ragAcc:
-                self.whatHat = "Rag"
-            if cansAcc:
-                self.whatHat = "Cans"
 
-    def setSelfName(self, n):
-        self.name = n
+
 
 
 def monkeyGen(ident):
@@ -175,7 +178,7 @@ def tlGen(monkey):
     
     if(monkey.name == "Lucy"):
 
-        image = pdb.gimp_file_load("/home/notes/Programming/yape-art-generator/Assets/lucy.xcf", "lucy.xcf")
+        image = pdb.gimp_file_load("/home/notes/Programming/Yapeswap/yape-art-generator/Assets/lucy.xcf", "lucy.xcf")
 
         image.active_layer = image.layers[17]
         drawable = image.active_layer
@@ -300,12 +303,12 @@ def tlGen(monkey):
         image.active_layer = image.layers[0]
         drawable = image.active_layer
 
-        pdb.file_png_save(image, drawable, "/home/notes/Desktop/Yapes/" + str(monkey.ident) + ".png", str(monkey.ident) + ".png", 0, 0, 0, 0, 0, 1, 1)
+        pdb.file_png_save(image, drawable, "/home/notes/Programming/Yapeswap/yape-art-generator/Yapes/" + str(monkey.ident) + ".png", str(monkey.ident) + ".png", 0, 0, 0, 0, 0, 1, 1)
         pdb.gimp_image_delete(image)
 
     else:
 
-        image = pdb.gimp_file_load("/home/notes/Programming/yape-art-generator/Assets/titus.xcf", "titus.xcf")
+        image = pdb.gimp_file_load("/home/notes/Programming/Yapeswap/yape-art-generator/Assets/titus.xcf", "titus.xcf")
 
         image.active_layer = image.layers[18]
         drawable = image.active_layer
@@ -433,21 +436,21 @@ def tlGen(monkey):
         image.active_layer = image.layers[0]
         drawable = image.active_layer
 
-        pdb.file_png_save(image, drawable, "/home/notes/Desktop/Yapes/" + str(monkey.ident) + ".png", str(monkey.ident) + ".png", 0, 0, 0, 0, 0, 1, 1)
+        pdb.file_png_save(image, drawable, "/home/notes/Programming/Yapeswap/yape-art-generator/Yapes/"  + str(monkey.ident) + ".png", str(monkey.ident) + ".png", 0, 0, 0, 0, 0, 1, 1)
         pdb.gimp_image_delete(image)
 
 def loadNames():
-    with open("/home/notes/Programming/yape-art-generator/PatternNames/pixNames.txt", "r") as txt_file:
+    with open("/home/notes/Programming/Yapeswap/yape-art-generator/PatternNames/pixNames.txt", "r") as txt_file:
         for line in txt_file:
             patNames.append(line)
     txt_file.close()
 
-    with open("/home/notes/Programming/yape-art-generator/PatternNames/hatNames.txt", "r") as txt_file:
+    with open("/home/notes/Programming/Yapeswap/yape-art-generator/PatternNames/hatNames.txt", "r") as txt_file:
         for line in txt_file:
             hatNames.append(line)
     txt_file.close()
 
-    with open("/home/notes/Programming/yape-art-generator/PatternNames/gradNames.txt", "r") as txt_file:
+    with open("/home/notes/Programming/Yapeswap/yape-art-generator/PatternNames/gradNames.txt", "r") as txt_file:
         for line in txt_file:
             gradNames.append(line)
     txt_file.close()
@@ -498,7 +501,7 @@ def yapePlugin(timg, tdrawable):
 
         json_object = json.dumps(metadata, indent = 4)
 
-        with open("/home/notes/Programming/yape-art-generator/Metadata/" + str(monkey.ident) + ".json", "w") as outfile:
+        with open("/home/notes/Programming/Yapeswap/yape-art-generator/Metadata/" + str(monkey.ident) + ".json", "w") as outfile:
             outfile.write(json_object)
         outfile.close()
 
