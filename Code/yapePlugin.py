@@ -457,7 +457,7 @@ def yapePlugin(timg, tdrawable):
     ident = 0
     monkies = []
     #Basically youd loop here to generate all monkeys if theres an error try again with same id
-    while(len(monkies) < 149):
+    while(len(monkies) < 10):
         nm = monkeyGen(ident)
         if nm not in monkies:
             monkies.append(nm)
