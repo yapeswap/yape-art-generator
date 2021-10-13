@@ -501,7 +501,7 @@ def metadataGenerator(mk):
 
         json_object = json.dumps(final, indent = 4)
 
-        with open("/home/notes/Programming/Yapeswap/yape-art-generator/TestMetadata/" + str(mk.ident) + ".json", "w") as outfile:
+        with open("/home/notes/Programming/Yapeswap/yape-art-generator/Metadata/" + str(mk.ident) + ".json", "w") as outfile:
             outfile.write(json_object)
         outfile.close()
 
