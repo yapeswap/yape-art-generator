@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-
+import os
 import random
 import numpy
 import json
+import requests
 from gimpfu import *
 
 #  ___    ___ ________  ________  _______   ________  ___       __   ________  ________   
@@ -13,6 +14,10 @@ from gimpfu import *
 # __/  / /      \ \__\ \__\ \__\    \ \_______\____\_\  \ \____________\ \__\ \__\ \__\   
 #|\___/ /        \|__|\|__|\|__|     \|_______|\_________\|____________|\|__|\|__|\|__|   
 #\|___|/                                      \|_________|                                
+
+ipfs_url = "https://api.pinata.cloud/pinning/pinFileToIPFS"
+hd={"pinata_api_key":os.environ['PINATA_API_KEY'],"pinata_secret_api_key" : os.environ['PINATA_API_SECRET']}
+ipfs_prefix = "https://gateway.pinata.cloud/ipfs/"
 
 ceil = 474
 hatCeil = 14
@@ -48,6 +53,7 @@ class Monkey():
         self.cmdrAcc = False
         self.duragAcc = False
         self.cansAcc = False
+        self.ipfsHash = ""
 
         self.shadesAcc = numpy.random.choice(elements, p=shadesWeight)
         self.caneAcc = numpy.random.choice(elements, p=caneWeight)
@@ -104,6 +110,8 @@ class Monkey():
     def setSelfName(self, n):
         self.name = n
 
+    def setIpfsHash(self, h):
+        self.ipfsHash = h
 
 def analytics(monkies):
     accessoryCount = 0
@@ -444,6 +452,21 @@ def loadNames():
             gradNames.append(line)
     txt_file.close()
 
+def uploadImage(mk):
+    r = requests.post(ipfs_url,
+                        files={"file": (str(mk.ident)+".png", open('/home/notes/Programming/Yapeswap/yape-art-generator/Yapes/' + str(mk.ident) +'.png', "rb"))},
+                        headers=hd)
+
+
+    mk.setIpfsHash(r.json()['IpfsHash'])
+
+
+def uploadJson(mk):
+    r = requests.post(ipfs_url,
+                    files={"file": (str(mk.ident)+".json", open('/home/notes/Programming/Yapeswap/yape-art-generator/Metadata/' + str(mk.ident) +'.json', "rb"))},
+                    headers=hd)
+
+
 def metadataGenerator(mk):
         metadata = mk.__dict__
         accessories = []
@@ -496,8 +519,9 @@ def metadataGenerator(mk):
        
        
         attributes = cleanedAccessories + baseAttributes
+        #image = AWAIT THE API PINATA API FOR UPLOADING OUR IMAGE
         fullName = metadata["name"] + " #" + str(metadata["ident"])
-        final = {"attributes": attributes, "description": "Thanks for Yaping", "image" : "Put PINATA HERE", "name" : fullName}
+        final = {"attributes": attributes, "description": "Thanks for Yaping", "image" : ipfs_prefix+mk.ipfsHash, "name" : fullName}
 
         json_object = json.dumps(final, indent = 4)
 
@@ -510,7 +534,7 @@ def yapePlugin(timg, tdrawable):
     ident = 0
     monkies = []
     #Basically youd loop here to generate all monkeys if theres an error try again with same id
-    while(len(monkies) < 10):
+    while(len(monkies) < 1):
         nm = monkeyGen(ident)
         if nm not in monkies:
             monkies.append(nm)
@@ -519,12 +543,15 @@ def yapePlugin(timg, tdrawable):
     for monkey in monkies:
         if(monkey.ident % 3 == 0):
             monkey.setSelfName("Titus")
+
         else:
             monkey.setSelfName("Lucy")
 
+        uploadImage(monkey)
         monkey.hatValidate()
         tlGen(monkey)
         metadataGenerator(monkey)
+        uploadJson(monkey)
 
 
 register(
